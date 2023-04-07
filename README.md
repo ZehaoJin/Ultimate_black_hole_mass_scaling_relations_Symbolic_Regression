@@ -2,7 +2,7 @@
 
 ## [Paper skeleton](https://www.overleaf.com/read/srkwtczhmfys)
 
-# THE ultimate black hole mass scaling relation
+# 1. THE ultimate black hole mass scaling relation
 ```math
 \LARGE
 \log (\frac{\text{M}_\text{BH}}{\text{M}_\odot})=\alpha \log \sigma_0 + \beta \log (B/T) + \gamma \log \rho_\text{soi} + \delta$
@@ -13,7 +13,7 @@
 ### $\Delta_{rms}=0.27$, while current m-sigma relation has $\Delta_{rms} \sim 0.5$
 ![](plots/sigma-BT-rho.png)
 
-# Data
+# 2. Data
 [Black hole mass catalog](SMBH_Data_0303.csv) by [Ben Davis](https://bendavis007.github.io/)
 
 ~100 direct measurement (by velocity of the orbiting stars) of black hole masses from very nearby observations, alone with other properties.
@@ -31,7 +31,8 @@ Including:
 
 The columns are all considered by Symbolic Regression ([PySR](https://astroautomata.com/PySR/)) to arrive the best equation for $M_{BH}$
 
-# Black hole mass scaling relations - Low Scatter Track
+# 3. Black hole mass scaling relations - Low Scatter Track
+## 3.1.
 ```math
 \LARGE
 \log (\frac{\text{M}_\text{BH}}{\text{M}_\odot})=2.8 \log \sigma_0 + 1.2 \log (B/T) - 0.3 \log \rho_\text{soi} + 3.3
@@ -42,7 +43,7 @@ $\Delta_{rms}=0.27$, while $M_{BH}-\sigma$ relation $\Delta_{rms} \sim 0.5$, $M_
 ![](plots/sigma-BT-rho.png)
 
 
-
+## 3.2.
 ```math
 \LARGE
 \log (\frac{\text{M}_\text{BH}}{\text{M}_\odot})=2.57 \log \sigma_0 + 0.38 (\log R_e - \log \rho_\text{soi}) + bvc + 2.61
@@ -52,6 +53,8 @@ $\Delta_{rms}=0.25  $, while $M_{BH}-\sigma$ relation $\Delta_{rms} \sim 0.5$, $
 
 ![](plots/sigma-Re-rho-bvc.png)
 
+
+## 3.3.
 ```math
 \LARGE
 \log (\frac{\text{M}_\text{BH}}{\text{M}_\odot})=2.57 \log \sigma_0 + \log(B/T) - 0.43 \log \rho_\text{soi} - 0.24 \ \text{Pseudobulge} + 4.01
@@ -62,6 +65,7 @@ $\Delta_{rms}=0.23  $, while $M_{BH}-\sigma$ relation $\Delta_{rms} \sim 0.5$, $
 ![](plots/sigma-BT-rho-pseudobulge.png)
 
 
+## 3.4.
 ```math
 \LARGE
 \log (\frac{\text{M}_\text{BH}}{\text{M}_\odot})=3 \log \sigma_0 - (\log \rho_\text{soi})^{0.58} + e^{\log(B/T)-\text{Pseudobulge}} + 2.55
@@ -72,6 +76,7 @@ $\Delta_{rms}=0.22  $, while $M_{BH}-\sigma$ relation $\Delta_{rms} \sim 0.5$, $
 ![](plots/sigma-rho-BT-pseudobulge.png)
 
 
+## 3.5.
 ```math
 \LARGE
 \log (\frac{\text{M}_\text{BH}}{\text{M}_\odot})=0.91 \log \text{M}^{*}_{\text{sph}} - 0.41(\log \rho_\text{soi}+\text{Pseudobulge}) - 0.27
@@ -82,6 +87,7 @@ $\Delta_{rms}=0.30  $, while $M_{BH}-M^\star_{sph}$ relation $\Delta_{rms} \sim 
 ![](plots/M-rho-pseudobulge.png)
 
 
+## 3.6.
 ```math
 \LARGE
 \log (\frac{\text{M}_\text{BH}}{\text{M}_\odot})= \log \sigma_0 + 0.58 (\log \text{M}^{*}_{\text{sph}}+ \log (B/T))
@@ -92,10 +98,10 @@ $\Delta_{rms}=0.43  $, while $M_{BH}-\sigma$ relation $\Delta_{rms} \sim 0.5$, $
 ![](plots/sigma-M-BT.png)
 
 
-# Black hole mass scaling relations - Easy-to-use Track
+# 4. Black hole mass scaling relations - Easy-to-use Track
 ## "Easy-to-use" - If you only have access to limited galaxy parameters, but you want to predict the black hole mass as accrute as possible.
 
-### Luminosity
+### 4.1. Luminosity
 ```math
 \LARGE
 \log (\frac{\text{M}_\text{BH}}{\text{M}_\odot})= \log L_{B}-\frac{1.73}{bvc}
@@ -116,7 +122,7 @@ $\Delta_{rms}=0.44  $, while $M_{BH}-L_B$ relation $\Delta_{rms} \sim 0.8$
 ![](plots/bvtc-blum.png)
 
 
-### Velocity dispersion $\sigma$
+### 4.2. Velocity dispersion $\sigma$
 ```math
 \LARGE
 \log (\frac{\text{M}_\text{BH}}{\text{M}_\odot})=\log \sigma_0 (3.61 + 0.23(\text{Core}-\text{Pseudobulge}))
@@ -137,7 +143,7 @@ $\Delta_{rms}=0.312  $, while $M_{BH}-\sigma$ relation $\Delta_{rms} \sim 0.5$
 ![](plots/sigma-core-pseudobulge2.png)
 
 
-### Stellar mass of bulge $M^\star_{sph}$
+### 4.3. Stellar mass of bulge $M^\star_{sph}$
 ```math
 \LARGE
 \log (\frac{\text{M}_\text{BH}}{\text{M}_\odot})= \log \text{M}^{*}_{\text{sph}} + 0.36 (\text{Core}-\text{Pseudobulge}) -2.42
@@ -157,7 +163,7 @@ $\Delta_{rms}=0.31  $, while $M_{BH}-M^\star_{sph}$ relation $\Delta_{rms} \sim 
 ![](plots/M-core-pseudobulge-bvc.png)
 
 
-### Effective Radius of bulge $R_e$
+### 4.4. Effective Radius of bulge $R_e$
 ```math
 \LARGE
 \log (\frac{\text{M}_\text{BH}}{\text{M}_\odot})= \log R_e + 0.67 \text{Core} + bvc + 7.06
