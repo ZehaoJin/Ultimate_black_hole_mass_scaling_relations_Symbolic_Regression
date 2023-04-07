@@ -154,6 +154,8 @@ $\Delta_{rms}=0.36  $, while $M_{BH}-M^\star_{sph}$ relation $\Delta_{rms} \sim 
 
 $\Delta_{rms}=0.31  $, while $M_{BH}-M^\star_{sph}$ relation $\Delta_{rms} \sim 0.5$
 
+![](plots/M-core-pseudobulge-bvc.png)
+
 
 ### Effective Radius of bulge $R_e$
 ```math
@@ -162,3 +164,5 @@ $\Delta_{rms}=0.31  $, while $M_{BH}-M^\star_{sph}$ relation $\Delta_{rms} \sim 
 ```
 
 $\Delta_{rms}=0.39  $, while $M_{BH}-R_e$ relation $\Delta_{rms} \sim 0.6$
+
+![](plots/Re-core-bvc.png)
