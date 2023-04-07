@@ -2,6 +2,8 @@
 
 ## [Paper skeleton](https://www.overleaf.com/read/srkwtczhmfys)
 
+## [Presentation Slides](GFG_20230405_blackhole_scaling_relations.pptx)
+
 # 1. THE ultimate black hole mass scaling relation
 ```math
 \LARGE
