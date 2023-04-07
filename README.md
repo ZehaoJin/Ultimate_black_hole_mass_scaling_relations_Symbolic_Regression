@@ -1,1 +1,1 @@
-# Ultimate_black_hole_mass_scaling_relations_Symbolic_Regression
+# Ultimate black hole mass scaling relations with Symbolic Regression
