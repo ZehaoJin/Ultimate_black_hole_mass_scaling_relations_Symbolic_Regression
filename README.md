@@ -69,32 +69,96 @@ $\Delta_{rms}=0.23  $, while $M_{BH}-\sigma$ relation $\Delta_{rms} \sim 0.5$, $
 
 $\Delta_{rms}=0.22  $, while $M_{BH}-\sigma$ relation $\Delta_{rms} \sim 0.5$, $M_{BH}-B/T$ relation $\Delta_{rms} \sim 0.7$, $M_{BH}-\rho_{soi}$ relation $\Delta_{rms} \sim 0.65$
 
-![](plots/sigma-rho-BT-psudobulge.png)
+![](plots/sigma-rho-BT-pseudobulge.png)
 
 
 ```math
 \LARGE
+\log (\frac{\text{M}_\text{BH}}{\text{M}_\odot})=0.91 \log \text{M}^{*}_{\text{sph}} - 0.41(\log \rho_\text{soi}+\text{Pseudobulge}) - 0.27
 ```
+
+$\Delta_{rms}=0.30  $, while $M_{BH}-M^\star_{sph}$ relation $\Delta_{rms} \sim 0.5$, $M_{BH}-\rho_{soi}$ relation $\Delta_{rms} \sim 0.65$
+
+![](plots/M-rho-pseudobulge.png)
 
 
 ```math
 \LARGE
+\log (\frac{\text{M}_\text{BH}}{\text{M}_\odot})= \log \sigma_0 + 0.58 (\log \text{M}^{*}_{\text{sph}}+ \log (B/T))
 ```
 
+$\Delta_{rms}=0.43  $, while $M_{BH}-\sigma$ relation $\Delta_{rms} \sim 0.5$, $M_{BH}-M^\star_{sph}$ relation $\Delta_{rms} \sim 0.5$, $M_{BH}-B/T$ relation $\Delta_{rms} \sim 0.7$
+
+![](plots/sigma-M-BT.png)
+
+
+# Black hole mass scaling relations - Easy-to-use Track
+## "Easy-to-use" - If you only have access to limited galaxy parameters, but you want to predict the black hole mass as accrute as possible.
+
+### Luminosity
+```math
+\LARGE
+\log (\frac{\text{M}_\text{BH}}{\text{M}_\odot})= \log L_{B}-\frac{1.73}{bvc}
+```
+
+$\Delta_{rms}=0.52  $, while $M_{BH}-L_B$ relation $\Delta_{rms} \sim 0.8$
+
+![](plots/blum-bvtc.png)
 
 
 ```math
 \LARGE
+\log (\frac{\text{M}_\text{BH}}{\text{M}_\odot})= 0.44^{bvc} + \log L_{B} - 5.52
 ```
 
+$\Delta_{rms}=0.44  $, while $M_{BH}-L_B$ relation $\Delta_{rms} \sim 0.8$
+
+![](plots/bvtc-blum.png)
+
+
+### Velocity dispersion $\sigma$
+```math
+\LARGE
+\log (\frac{\text{M}_\text{BH}}{\text{M}_\odot})=\log \sigma_0 (3.61 + 0.23(\text{Core}-\text{Pseudobulge}))
+```
+
+$\Delta_{rms}=0.31  $, while $M_{BH}-\sigma$ relation $\Delta_{rms} \sim 0.5$
+
+![](plots/sigma-core-pseudobulge.png)
 
 
 ```math
 \LARGE
+\log (\frac{\text{M}_\text{BH}}{\text{M}_\odot})=4.14 \log \sigma_0 + 0.45 (\text{Core}-\text{Pseudobulge})-1.14
 ```
 
+$\Delta_{rms}=0.312  $, while $M_{BH}-\sigma$ relation $\Delta_{rms} \sim 0.5$
 
+![](plots/sigma-core-pseudobulge2.png)
+
+
+### Stellar mass of bulge $M^\star_{sph}$
+```math
+\LARGE
+\log (\frac{\text{M}_\text{BH}}{\text{M}_\odot})= \log \text{M}^{*}_{\text{sph}} + 0.36 (\text{Core}-\text{Pseudobulge}) -2.42
+```
+
+$\Delta_{rms}=0.36  $, while $M_{BH}-M^\star_{sph}$ relation $\Delta_{rms} \sim 0.5$
+
+![](plots/M-core-pseudobulge.png)
 
 ```math
 \LARGE
+\log (\frac{\text{M}_\text{BH}}{\text{M}_\odot})= \log \text{M}^{*}_{\text{sph}} + 0.33 (\text{Core}-\text{Pseudobulge}) + 0.17 bvc -2.54
 ```
+
+$\Delta_{rms}=0.31  $, while $M_{BH}-M^\star_{sph}$ relation $\Delta_{rms} \sim 0.5$
+
+
+### Effective Radius of bulge $R_e$
+```math
+\LARGE
+\log (\frac{\text{M}_\text{BH}}{\text{M}_\odot})= \log R_e + 0.67 \text{Core} + bvc + 7.06
+```
+
+$\Delta_{rms}=0.39  $, while $M_{BH}-R_e$ relation $\Delta_{rms} \sim 0.6$
