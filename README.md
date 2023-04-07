@@ -37,17 +37,63 @@ The columns are all considered by Symbolic Regression ([PySR](https://astroautom
 \log (\frac{\text{M}_\text{BH}}{\text{M}_\odot})=2.8 \log \sigma_0 + 1.2 \log (B/T) - 0.3 \log \rho_\text{soi} + 3.3
 ```
 
+$\Delta_{rms}=0.27$, while $M_{BH}-\sigma$ relation $\Delta_{rms} \sim 0.5$, $M_{BH}-B/T$ relation $\Delta_{rms} \sim 0.7$, $M_{BH}-\rho_{soi}$ relation $\Delta_{rms} \sim 0.65$
+
+![](plots/sigma-BT-rho.png)
+
 
 
 ```math
 \LARGE
 \log (\frac{\text{M}_\text{BH}}{\text{M}_\odot})=2.57 \log \sigma_0 + 0.38 (\log R_e - \log \rho_\text{soi}) + bvc + 2.61
 ```
+
+$\Delta_{rms}=0.25  $, while $M_{BH}-\sigma$ relation $\Delta_{rms} \sim 0.5$, $M_{BH}-R_e$ relation $\Delta_{rms} \sim 0.6$, $M_{BH}-\rho_{soi}$ relation $\Delta_{rms} \sim 0.65$
+
 ![](plots/sigma-Re-rho-bvc.png)
 
 ```math
 \LARGE
+\log (\frac{\text{M}_\text{BH}}{\text{M}_\odot})=2.57 \log \sigma_0 + \log(B/T) - 0.43 \log \rho_\text{soi} - 0.24 \ \text{Pseudobulge} + 4.01
 ```
+
+$\Delta_{rms}=0.23  $, while $M_{BH}-\sigma$ relation $\Delta_{rms} \sim 0.5$, $M_{BH}-B/T$ relation $\Delta_{rms} \sim 0.7$, $M_{BH}-\rho_{soi}$ relation $\Delta_{rms} \sim 0.65$
+
+![](plots/sigma-BT-rho-pseudobulge.png)
+
+
+```math
+\LARGE
+\log (\frac{\text{M}_\text{BH}}{\text{M}_\odot})=3 \log \sigma_0 - (\log \rho_\text{soi})^{0.58} + e^{\log(B/T)-\text{Pseudobulge}} + 2.55
+```
+
+$\Delta_{rms}=0.22  $, while $M_{BH}-\sigma$ relation $\Delta_{rms} \sim 0.5$, $M_{BH}-B/T$ relation $\Delta_{rms} \sim 0.7$, $M_{BH}-\rho_{soi}$ relation $\Delta_{rms} \sim 0.65$
+
+![](plots/sigma-rho-BT-psudobulge.png)
+
+
+```math
+\LARGE
+```
+
+
+```math
+\LARGE
+```
+
+
+
+```math
+\LARGE
+```
+
+
+
+```math
+\LARGE
+```
+
+
 
 ```math
 \LARGE
