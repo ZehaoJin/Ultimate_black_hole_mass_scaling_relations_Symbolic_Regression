@@ -11,7 +11,7 @@
 ```
 ### $\alpha=2.777\pm0.052$, $\beta=1.164\pm0.096$, $\gamma=-0.366\pm0.038$, $\delta=3.321\pm0.106$, with an intrinsic scatter $\epsilon=0.083\pm0.059 \ \textup{dex}$ in $\log M_{BH}/M_\odot$ direction.
 
-### Intrinsic scatter $\epsilon=0.083$, while current m-sigma relation has  $\epsilon \sim 0.3$
+### Intrinsic scatter $\epsilon=0.083$, while current $m-\sigma$ relation has  $\epsilon \sim 0.3$
 ### $\Delta_{rms}=0.27$, while current m-sigma relation has $\Delta_{rms} \sim 0.5$
 ![](plots/sigma-BT-rho.png)
 
