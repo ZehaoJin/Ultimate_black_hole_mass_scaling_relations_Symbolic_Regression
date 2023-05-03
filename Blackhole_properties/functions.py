@@ -215,19 +215,22 @@ def hyperfit(paras,bounds,plot=True,df=pd.read_csv(catalog,header=1)):
 
 
 # utils for plot residual
-def scatter_residual(x, y, xerr, fmt, alpha, label, ax, ax_histx, bins=12):
+def scatter_residual(x, y, xerr, fmt, alpha, label, ax, ax_histx1, ax_histx2, bins=12):
     # no labels
-    ax_histx.tick_params(axis="x", labelbottom=False)
+    ax_histx1.tick_params(axis="x", labelbottom=False)
+    ax_histx2.tick_params(axis="x", labelbottom=False)
     # the scatter plot:
     ax.errorbar(x,y,xerr=xerr,fmt=fmt,ecolor='grey',capsize=3, alpha=alpha,label=label)
 
     # x hist
-    residual=y-x
     #w = 1/xerr**2
-    _,edges=np.histogram(x,bins)
+    num,edges=np.histogram(x,bins)
     #hist, _ = np.histogram(x, bins=edges, weights=residual*w/w.mean())
-    hist, _ = np.histogram(x, bins=edges, weights=residual)
-    ax_histx.stairs(hist,edges,lw=3,alpha=alpha)
+    hist, _ = np.histogram(x, bins=edges, weights=(y-x))
+    ax_histx2.stairs(hist/num,edges,lw=3,alpha=alpha)
+
+    hist, _ = np.histogram(x, bins=edges, weights=np.sqrt((y-x)**2))
+    ax_histx1.stairs(hist/num,edges,lw=3,alpha=alpha)
 
 
 
@@ -264,29 +267,31 @@ def plot_relation(paras,relation,obs=pd.read_csv(catalog,header=1),label='new re
     fs=20
     bins=bins
     # Add a gridspec
-    gs = fig.add_gridspec(2, 1,  height_ratios=(1, 4),
+    gs = fig.add_gridspec(3, 1,  height_ratios=(1, 1, 4),
                       left=0.1, right=0.9, bottom=0.1, top=0.9,
                       wspace=0.05, hspace=0.05)
     # Create the Axes.
-    ax = fig.add_subplot(gs[1, 0])
-    ax_histx = fig.add_subplot(gs[0, 0], sharex=ax)
+    ax = fig.add_subplot(gs[2, 0])
+    ax_histx1 = fig.add_subplot(gs[0, 0], sharex=ax)
+    ax_histx2 = fig.add_subplot(gs[1, 0], sharex=ax)
     # Draw the f(x)=x line
     minrange=np.array([y.min(),y_pred.min()]).min()
     maxrange=np.array([y.max(),y_pred.max()]).max()
     ax.plot(np.linspace(minrange,maxrange),np.linspace(minrange,maxrange),label='f(x)=x',c='r',ls='--')
-    ax_histx.plot(np.linspace(minrange,maxrange),np.zeros(len(np.linspace(minrange,maxrange))),c='r',ls='--')
+    ax_histx2.plot(np.linspace(minrange,maxrange),np.zeros(len(np.linspace(minrange,maxrange))),c='r',ls='--')
     # Draw the scatter plot and marginals.
     ## new relation
     scatter_residual(y,y_pred,yerr,'o',0.8,label,
-                     ax, ax_histx,bins=bins)
+                     ax, ax_histx1, ax_histx2, bins=bins)
     ## m-sigma relation
     y_pred_ref=reference_relation(obs[reference])
     scatter_residual(y,y_pred_ref,yerr,'s',0.5,reference_name,
-                    ax, ax_histx,bins=bins)
+                    ax, ax_histx1, ax_histx2, bins=bins)
 
     ax.set_xlabel(r'True $\rm{log} M_{BH}[M_\odot]$',fontsize=fs)
     ax.set_ylabel(r'Predicted $\rm{log} M_{BH}[M_\odot]$',fontsize=fs)
-    ax_histx.set_ylabel('Residual',fontsize=fs)
+    ax_histx2.set_ylabel('Bias',fontsize=fs)
+    ax_histx1.set_ylabel('Scatter',fontsize=fs)
     #ax_histx.set_ylabel('Weighted Residual',fontsize=fs)
     ax.legend(fontsize=fs*labelamp)
     plt.show()
