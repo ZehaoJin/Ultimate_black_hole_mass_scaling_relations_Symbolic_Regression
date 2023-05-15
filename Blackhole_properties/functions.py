@@ -7,7 +7,7 @@ import old_relations
 
 from hyperfit.linfit import LinFit
 
-catalog='SMBH_Data_0407.csv'
+catalog='SMBH_Data_0504.csv'
 
 # utils
 def df2name(df):
