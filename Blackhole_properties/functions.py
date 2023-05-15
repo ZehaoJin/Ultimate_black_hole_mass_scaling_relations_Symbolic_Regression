@@ -235,7 +235,7 @@ def scatter_residual(x, y, xerr, fmt, alpha, label, ax, ax_histx1, ax_histx2, bi
 
 
 # plot relation & residual
-def plot_relation(paras,relation,obs=pd.read_csv(catalog,header=1),label='new relation',labelamp=0.8,bins=8,
+def plot_relation(paras,relation,obs=pd.read_csv(catalog,header=1),label='new relation',labelamp=0.8,bins=8,loc=0,
                 reference='log_sigma0',reference_relation=old_relations.m_sigma_relation,reference_name=r'$\log (\frac{{M}_{BH}}{{M}_\odot})= 6.10 \log (\frac{\sigma_0}{200})+8.27$'):
 
     if paras[-1]!='M_BH':
@@ -293,7 +293,7 @@ def plot_relation(paras,relation,obs=pd.read_csv(catalog,header=1),label='new re
     ax_histx2.set_ylabel('Bias',fontsize=fs)
     ax_histx1.set_ylabel('Scatter',fontsize=fs)
     #ax_histx.set_ylabel('Weighted Residual',fontsize=fs)
-    ax.legend(fontsize=fs*labelamp)
+    ax.legend(fontsize=fs*labelamp,loc=loc)
     plt.show()
 
     w = 1/yerr**2
