@@ -4,6 +4,10 @@
 
 ## [Presentation Slides](GFG_20230405_blackhole_scaling_relations.pptx)
 
+## [Black hole mass - galaxy property catalog](Blackhole_properties/SMBH_Data_0504.csv)
+
+## [Latest plots](Blackhole_properties/poster_plots_0502.ipynb)
+
 # 1. THE ultimate black hole mass scaling relation
 ```math
 \LARGE
@@ -16,7 +20,7 @@
 ![](plots/sigma-BT-rho.png)
 
 # 2. Data
-[Black hole mass catalog](SMBH_Data_0303.csv) by [Ben Davis](https://bendavis007.github.io/)
+[Black hole mass catalog](Blackhole_properties/SMBH_Data_0504.csv) by [Ben Davis](https://bendavis007.github.io/)
 
 ~100 direct measurement (by velocity of the orbiting stars) of black hole masses from very nearby observations, alone with other properties.
 
