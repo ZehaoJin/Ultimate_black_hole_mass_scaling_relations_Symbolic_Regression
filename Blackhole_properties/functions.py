@@ -288,10 +288,17 @@ def plot_relation(paras,relation,obs=pd.read_csv(catalog,header=1),label='new re
     scatter_residual(y,y_pred_ref,yerr,'s',0.5,reference_name,
                     ax, ax_histx1, ax_histx2, bins=bins)
 
-    ax.set_xlabel(r'True $\rm{log} M_{BH}[M_\odot]$',fontsize=fs)
-    ax.set_ylabel(r'Predicted $\rm{log} M_{BH}[M_\odot]$',fontsize=fs)
-    ax_histx2.set_ylabel('Bias',fontsize=fs)
-    ax_histx1.set_ylabel('Scatter',fontsize=fs)
+    #ax.set_xlabel(r'True $\rm{log} M_{BH}[M_\odot]$',fontsize=fs)
+    #ax.set_ylabel(r'Predicted $\rm{log} M_{BH}[M_\odot]$',fontsize=fs)
+
+    ax.set_xlabel(r'Dynamically-measured $\mathcal{M}_\bullet$ [dex]',fontsize=fs)
+    ax.set_ylabel(r'Predicted $\mathcal{M}_\bullet$ [dex]',fontsize=fs)
+
+    #ax_histx2.set_ylabel('Bias',fontsize=fs)
+    #ax_histx1.set_ylabel('Scatter',fontsize=fs)
+
+    ax_histx2.set_ylabel(r'$\bar{\Delta}$',fontsize=fs)
+    ax_histx1.set_ylabel(r'$\Delta_\mathrm{rms}$',fontsize=fs)
     #ax_histx.set_ylabel('Weighted Residual',fontsize=fs)
     ax.legend(fontsize=fs*labelamp,loc=loc)
     plt.show()
