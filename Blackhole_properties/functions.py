@@ -8,6 +8,7 @@ import old_relations
 from hyperfit.linfit import LinFit
 
 catalog='SMBH_Data_0522.csv'
+#catalog='SMBH_Data_0906_test.csv'
 
 # utils
 def df2name(df):
@@ -27,6 +28,9 @@ def wrmse(y,y_pred,w):
 def test_relation(paras,obs=pd.read_csv(catalog,header=1),
                   operator='basic',ncyclesperiteration=550,niterations=40,denoise=False,adaptive_parsimony_scaling=20,
                   verbosity=0,colname=False):
+#def test_relation(paras,obs=pd.read_csv(catalog,header=0),
+                  #operator='basic',ncyclesperiteration=550,niterations=40,denoise=False,adaptive_parsimony_scaling=20,
+                  #verbosity=0,colname=False):
 
     if paras[-1]!='M_BH':
         paras.append('M_BH')
@@ -102,6 +106,10 @@ def test_relation(paras,obs=pd.read_csv(catalog,header=1),
 def test_relation2(paras,obs=pd.read_csv(catalog,header=1),
                   operator='basic',ncyclesperiteration=550,niterations=40,denoise=False,adaptive_parsimony_scaling=20,
                   verbosity=0,colname=False):
+#def test_relation2(paras,obs=pd.read_csv(catalog,header=0),
+                  #operator='basic',ncyclesperiteration=550,niterations=40,denoise=False,adaptive_parsimony_scaling=20,
+                  #verbosity=0,colname=False):
+
 
     paras.append(paras[-1]+'_std')
 
@@ -163,11 +171,11 @@ def test_relation2(paras,obs=pd.read_csv(catalog,header=1),
     print('y   :',paras[-2])
     df2name(obs.iloc[:,:-2])
 
-    print('Eq. selected rmse:',rmse(y,model.predict(X),w))
+    print('Eq. selected rmse:',wrmse(y,model.predict(X),w))
     display(model.sympy())
 
     for i in range(len(model.equations_)):
-        print('Eq.',i,'rmse:',rmse(y,model.predict(X,index=i),w))
+        print('Eq.',i,'rmse:',wrmse(y,model.predict(X,index=i),w))
         display(model.sympy(index=i))
 
 
