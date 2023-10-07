@@ -7,7 +7,7 @@ import old_relations
 
 from hyperfit.linfit import LinFit
 
-catalog='SMBH_Data_0522.csv'
+catalog='SMBH_Data_0911.csv'
 #catalog='SMBH_Data_0906_test.csv'
 
 # utils
@@ -27,7 +27,7 @@ def wrmse(y,y_pred,w):
 # test_relation(['log_sigma0','M*_sph','log_B/T','log_R_e_sph_eq_kpc','bvtc'],operator='adv',ncyclesperiteration=5000,niterations=100)
 def test_relation(paras,obs=pd.read_csv(catalog,header=1),
                   operator='basic',ncyclesperiteration=550,niterations=40,denoise=False,adaptive_parsimony_scaling=20,
-                  verbosity=0,colname=False):
+                  verbosity=0,colname=False,return_model=False,maxsize=20):
 #def test_relation(paras,obs=pd.read_csv(catalog,header=0),
                   #operator='basic',ncyclesperiteration=550,niterations=40,denoise=False,adaptive_parsimony_scaling=20,
                   #verbosity=0,colname=False):
@@ -62,6 +62,7 @@ def test_relation(paras,obs=pd.read_csv(catalog,header=1),
             adaptive_parsimony_scaling=adaptive_parsimony_scaling,
             verbosity=verbosity,
             precision=64,
+            maxsize=maxsize,
         )
     if operator=='simp':
         model = PySRRegressor(
@@ -73,6 +74,7 @@ def test_relation(paras,obs=pd.read_csv(catalog,header=1),
             adaptive_parsimony_scaling=adaptive_parsimony_scaling,
             verbosity=verbosity,
             precision=64,
+            maxsize=maxsize,
         )
 
     if operator=='basic':
@@ -85,6 +87,7 @@ def test_relation(paras,obs=pd.read_csv(catalog,header=1),
             adaptive_parsimony_scaling=adaptive_parsimony_scaling,
             verbosity=verbosity,
             precision=64,
+            maxsize=maxsize,
         )
 
 
@@ -100,6 +103,8 @@ def test_relation(paras,obs=pd.read_csv(catalog,header=1),
     for i in range(len(model.equations_)):
         print('Eq.',i,'rmse:',wrmse(y,model.predict(X,index=i),w))
         display(model.sympy(index=i))
+    if return_model:
+        return model
 
 # Treat the last para as y, other paras as x, y=f(x)
 # test_relation2(['log_R_e_sph_eq_kpc','bvtc','log_B/T'])
@@ -296,17 +301,16 @@ def plot_relation(paras,relation,obs=pd.read_csv(catalog,header=1),label='new re
     scatter_residual(y,y_pred_ref,yerr,'s',0.5,reference_name,
                     ax, ax_histx1, ax_histx2, bins=bins)
 
-    #ax.set_xlabel(r'True $\rm{log} M_{BH}[M_\odot]$',fontsize=fs)
-    #ax.set_ylabel(r'Predicted $\rm{log} M_{BH}[M_\odot]$',fontsize=fs)
+    ax.set_xlabel(r'True $\rm{log} M_{BH}[M_\odot]$',fontsize=fs)
+    ax.set_ylabel(r'Predicted $\rm{log} M_{BH}[M_\odot]$',fontsize=fs)
+    #ax.set_xlabel(r'Dynamically-measured $\mathcal{M}_\bullet$ [dex]',fontsize=fs)
+    #ax.set_ylabel(r'Predicted $\mathcal{M}_\bullet$ [dex]',fontsize=fs)
 
-    ax.set_xlabel(r'Dynamically-measured $\mathcal{M}_\bullet$ [dex]',fontsize=fs)
-    ax.set_ylabel(r'Predicted $\mathcal{M}_\bullet$ [dex]',fontsize=fs)
+    ax_histx2.set_ylabel('Bias',fontsize=fs)
+    ax_histx1.set_ylabel('Scatter',fontsize=fs)
+    #ax_histx2.set_ylabel(r'$\bar{\Delta}$',fontsize=fs)
+    #ax_histx1.set_ylabel(r'$\Delta_\mathrm{rms}$',fontsize=fs)
 
-    #ax_histx2.set_ylabel('Bias',fontsize=fs)
-    #ax_histx1.set_ylabel('Scatter',fontsize=fs)
-
-    ax_histx2.set_ylabel(r'$\bar{\Delta}$',fontsize=fs)
-    ax_histx1.set_ylabel(r'$\Delta_\mathrm{rms}$',fontsize=fs)
     #ax_histx.set_ylabel('Weighted Residual',fontsize=fs)
     ax.legend(fontsize=fs*labelamp,loc=loc)
     plt.show()
@@ -315,3 +319,106 @@ def plot_relation(paras,relation,obs=pd.read_csv(catalog,header=1),label='new re
     #print('obs rmse:',rmse(y,y_pred))
     print('N-D relation wrmse:',wrmse(y,y_pred,w))
     print('1-D relation wrmse:',wrmse(y,y_pred_ref,1/yerr**2))
+
+
+
+# plot relation & residual
+def plot_relation_presentation(paras,relation,obs=pd.read_csv(catalog,header=1),label='new relation',labelamp=0.8,loc=0,
+                reference='log_sigma0',reference_relation=old_relations.m_sigma_relation,reference_name=r'$\log (\frac{{M}_{BH}}{{M}_\odot})= 6.10 \log (\frac{\sigma_0}{200})+8.27$'):
+
+    if paras[-1]!='M_BH':
+        paras.append('M_BH')
+
+    paras.append('M_BH_std')
+
+    offset=0
+    if np.isin(paras,reference).sum()==0:
+        paras.append(reference)
+        offset=1
+
+    obs = obs[paras].dropna(axis='index',how='any')
+
+    print(len(obs))
+
+    y=obs['M_BH'].to_numpy()
+    yerr=obs['M_BH_std'].to_numpy()
+
+    x=[]
+    for i in range(len(paras)-(2+offset)):
+        x.append(obs.iloc[:,i].to_numpy())
+
+    y_pred=relation(*x)
+
+
+    # Start with a square Figure.
+    fig = plt.figure(figsize=(12,10))
+    fs=20
+    # Draw the f(x)=x line
+    minrange=np.array([y.min(),y_pred.min()]).min()
+    maxrange=np.array([y.max(),y_pred.max()]).max()
+    plt.plot(np.linspace(minrange,maxrange),np.linspace(minrange,maxrange),label='f(x)=x',c='r',ls='--')
+    # Draw the scatter plot
+    ## new relation
+    plt.errorbar(y,y_pred,xerr=yerr,fmt='o',ecolor='grey',capsize=3, alpha=0.8,label=label)
+
+    ## m-sigma relation
+    y_pred_ref=reference_relation(obs[reference])
+    plt.errorbar(y,y_pred_ref,xerr=yerr,fmt='s',ecolor='grey',capsize=3, alpha=0.5,label=reference_name)
+
+    plt.xlabel(r'True $\rm{log} M_{BH}[M_\odot]$',fontsize=fs)
+    plt.ylabel(r'Predicted $\rm{log} M_{BH}[M_\odot]$',fontsize=fs)
+
+    plt.legend(fontsize=fs*labelamp,loc=loc)
+    plt.show()
+
+    w = 1/yerr**2
+    #print('obs rmse:',rmse(y,y_pred))
+    print('N-D relation wrmse:',wrmse(y,y_pred,w))
+    print('1-D relation wrmse:',wrmse(y,y_pred_ref,1/yerr**2))
+
+
+
+def AIC(k,L):
+    return 2*k-2*np.log(L)
+
+def BIC(k,L,n):
+    return np.log(n)*k-2*np.log(L)
+
+
+# log likelihood for linear regression
+def log_likelihood(y,y_pred,w):
+    residuals = np.sqrt(w) * (y - y_pred)
+    sigma2 = np.var(residuals)
+    n = len(y)
+    log_likelihood = -n/2 * np.log(2 * np.pi * sigma2) - 1/(2 * sigma2) * np.sum(residuals**2)
+    return log_likelihood
+
+
+def test_AIC_BIC(paras,model,obs=pd.read_csv(catalog,header=1)):
+    k=len(paras)
+
+    if paras[-1]!='M_BH':
+        paras.append('M_BH')
+
+    paras.append('M_BH_std')
+
+    obs = obs[paras].dropna(axis='index',how='any')
+    print(len(obs))
+
+    y=obs['M_BH'].to_numpy()
+    yerr=obs['M_BH_std'].to_numpy()
+    w = 1/yerr**2
+
+    x=[]
+    for i in range(len(paras)-2):
+        x.append(obs.iloc[:,i].to_numpy())
+
+
+    y_pred=model(*x)
+    L=np.exp(log_likelihood(y,y_pred,w))
+    AIC_value=AIC(k,L)
+    BIC_value=BIC(k,L,len(y))
+    print("log likelihood:",np.log(L))
+    print("AIC: ",AIC_value)
+    print("BIC: ",BIC_value)
+    return AIC_value,BIC_value

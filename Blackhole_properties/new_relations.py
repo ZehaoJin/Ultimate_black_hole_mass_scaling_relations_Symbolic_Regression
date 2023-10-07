@@ -121,10 +121,33 @@ def phi_v_relation(phi,v):
     return a*v*(v-phi)
 
 # spiral/LTG galaxy
-# $\log (\frac{{M}_{BH}}{{M}_\odot})= \frac{8.93+\frac{0.61 \tan\phi}{M^*_{gal}(M^*_{gal}-\frac{2.50}{\tan\phi})}}{\tan\phi+0.98}$
+# $\log (\frac{{M}_{BH}}{{M}_\odot}) = \frac{8.93+\frac{0.61 \tan\phi}{M^*_{gal}(M^*_{gal}-\frac{2.50}{\tan\phi})}}{\tan\phi+0.98}$
 def mgal_phi_relation(mgal,phi):
     a=8.928946755726638
     b=0.6121230044044399
     c=2.5005639649031903
     d=0.9796146336168521
     return (a+(b*phi/(mgal*(mgal-(c/phi)))))/(phi+d)
+
+# Easy-to-use relation
+# $\log (\frac{{M}_{BH}}{{M}_\odot}) = \log \sigma_0 + \log \textup{M}^{*}_{\textup{sph}} - 0.42 \ \textup{Pseudobulge} - 4.59$
+def sigma_Msph_pseudobulge_relation(sigma,Msph,pseudobulge):
+    a=-0.4187824174909826
+    b=-4.5895796522317545
+    return sigma+Msph+a*pseudobulge+b
+
+# Easy-to-use relation
+# $\log (\frac{{M}_{BH}}{{M}_\odot}) = 0.93 (\log \sigma_0)^2 + 0.56 \log R_{e,sph,maj} + 3.2)$
+def sigma_Re_maj_relation(sigma,Re):
+    a=0.9271154736686101
+    b=0.5607269304350105
+    c=3.2029708446894385
+    return a*sigma**2+b*Re+c
+
+# Easy-to-use relation
+# $\log (\frac{{M}_{BH}}{{M}_\odot}) = 3.59 \log \sigma_0 + 0.50 \log R_{e,sph,maj} - 0.50 \textup{Pseudobulge}$
+def sigma_Re_maj_Pseudobulge_relation(sigma,Re,pseudobulge):
+    a=3.589249391739994
+    b=0.50273659760562763
+    c=-0.50273659760562763
+    return a*sigma+b*Re+c*pseudobulge

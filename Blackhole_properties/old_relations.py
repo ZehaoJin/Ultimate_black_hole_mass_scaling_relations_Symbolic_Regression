@@ -60,11 +60,20 @@ def m_blum_relation(logblum):
 
 # Ultimate_black_hole_mass_scaling_relations_Symbolic_Regression/Blackhole_properties/reference_relations_0502.ipynb
 # general
-# $\log (\frac{{M}_{BH}}{{M}_\odot})=1.63 \log R_{e} + 7.68$
-def m_Re_relation(log_Re):
+# $\log (\frac{{M}_{BH}}{{M}_\odot})=1.63 \log R_{e,sph,eq} + 7.68$
+def m_Re_eq_relation(log_Re):
     a=1.63073002
     b=7.67555795
     return a*log_Re+b
+
+# Ultimate_black_hole_mass_scaling_relations_Symbolic_Regression/Blackhole_properties/reference_relations_0502.ipynb
+# general
+# $\log (\frac{{M}_{BH}}{{M}_\odot})=1.51 \log R_{e,sph,maj} + 7.61$
+def m_Re_maj_relation(log_Re):
+    a=1.50980505
+    b=7.60613021
+    return a*log_Re+b
+
 
 # https://arxiv.org/pdf/1908.06838.pdf
 # LTG galaxies
