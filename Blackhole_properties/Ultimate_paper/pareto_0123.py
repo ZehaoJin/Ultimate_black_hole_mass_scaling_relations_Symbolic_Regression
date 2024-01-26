@@ -53,8 +53,8 @@ X = obs.iloc[:,:-2].to_numpy()
 
 # start over 50 times, each time evolve 500 generations
 #evolutions = 50
-evolutions = 2
-niterations = 500
+evolutions = 5
+niterations = 5000
 
 
 denoise=False
