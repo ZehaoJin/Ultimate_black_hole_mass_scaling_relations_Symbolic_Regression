@@ -5,6 +5,12 @@ from pysr import PySRRegressor
 import re
 from tqdm import tqdm
 
+# params
+# already did low_adv
+para_set = 'low'  # low/easy
+operator_set = 'sim'  #adv/sim
+
+
 low_scatter_para=['ETG','T-type','Bar', 'Disk', 'Ring', 'Core', 'Multiple', 'Compactness', 'AGN',
        'Pseudobulge', 'BCG', 'cD','M*_sph', 'M*_gal', 'log_B/T',
        'log_sigma0', 'log_R_e_sph_maj','log_R_e_sph_eq_kpc', 'log_n_sph_maj', 'log_n_sph_eq', 'log(I_e,sph,maj/M_Sun/pc^2)',
@@ -25,18 +31,19 @@ low_scatter_para=['ETG','T-type','Bar', 'Disk', 'Ring', 'Core', 'Multiple', 'Com
        'dc', 'bvtc', 'bri25', 'mabs', 'blum', 'logblum', 'logSigma0sph',
        'LogSigma0', 'R10', 'logR10', 'logR10phi', 'Rh', 'logRh', 'logRhphi',
        'logHalo','B-V','V-[3.6]','GJC23W1-W2','GJC23W2-W3','GJC23log(M*,gal/M_sun)',
-       'GJC23log(SFR)','GJC23log(sSFR)','M_BH']
+       'GJC23log(SFR)','GJC23log(sSFR)','log<Sigma>_e','log<Sigma>_h','M_BH']
 
 easy_obs_para=['LogSigma0','Concentration_Index','logSigma0sph','log_sigma0','dc','logRhphi','M*_sph','ube','bri25','bve','bvtc','logR10phi','M*_gal','log_B/T',
  'logRh','log_n_sph_eq','blum','log_R_e_sph_maj','logblum','log_n_sph_maj','logR10','Pseudobulge','AGN','Multiple','Ring','BCG','Disk','cD',
  'Bar','Core','Compactness','ETG','T-type','M_BH','log10(R10_kpc)','log10(R90_kpc)','B-V','V-[3.6]','GJC23W1-W2','GJC23W2-W3','GJC23log(M*,gal/M_sun)','M_BH']
 
 
-df_full = pd.read_csv('SMBH_Data_01_22_24.csv',header=1)
+df_full = pd.read_csv('SMBH_Data_03_06_24.csv',header=1)
 
-
-paras=low_scatter_para.copy()
-#paras=easy_obs_para.copy()
+if para_set =='low':
+    paras=low_scatter_para.copy()
+if para_set =='easy':
+    paras=easy_obs_para.copy()
 
 if paras[-1]!='M_BH':
     paras.append('M_BH')
@@ -73,26 +80,47 @@ tempdir='/data/zj448/SR/Ultimate_paper/temp/'  # dummy dir to save temp files an
 for epoch in tqdm(range(evolutions),desc='evolution'):
 
     warm_start=True
-    model = PySRRegressor(
-        binary_operators=["+", "-", "*", "/","pow"],
-        unary_operators=["exp","log10"],
-        constraints={"pow": (9, 1)}, # power laws can have 9 complexity left argument, but only 1 complexity in the right argument.
-        warm_start=warm_start,
-        denoise=denoise,
-        niterations=1,
-        ncyclesperiteration=ncyclesperiteration,
-        adaptive_parsimony_scaling=adaptive_parsimony_scaling,
-        verbosity=verbosity,
-        precision=64,
-        maxsize=maxsize,
-        optimizer_algorithm=optimizer_algorithm,
-        optimizer_iterations=optimizer_iterations,
-        optimizer_nrestarts=optimizer_nrestarts,
-        should_simplify=should_simplify,
-        temp_equation_file=temp_equation_file,
-        tempdir=tempdir,
-        )
-    
+    if operator_set=='adv':
+        model = PySRRegressor(
+            binary_operators=["+", "-", "*", "/","pow"],
+            unary_operators=["exp","log10"],
+            constraints={"pow": (9, 1)}, # power laws can have 9 complexity left argument, but only 1 complexity in the right argument.
+            warm_start=warm_start,
+            denoise=denoise,
+            niterations=1,
+            ncyclesperiteration=ncyclesperiteration,
+            adaptive_parsimony_scaling=adaptive_parsimony_scaling,
+            verbosity=verbosity,
+            precision=64,
+            maxsize=maxsize,
+            optimizer_algorithm=optimizer_algorithm,
+            optimizer_iterations=optimizer_iterations,
+            optimizer_nrestarts=optimizer_nrestarts,
+            should_simplify=should_simplify,
+            temp_equation_file=temp_equation_file,
+            tempdir=tempdir,
+            procs=128
+            )
+    if operator_set=='sim':
+        model = PySRRegressor(
+            binary_operators=["+", "-", "*", "/"],
+            warm_start=warm_start,
+            denoise=denoise,
+            niterations=1,
+            ncyclesperiteration=ncyclesperiteration,
+            adaptive_parsimony_scaling=adaptive_parsimony_scaling,
+            verbosity=verbosity,
+            precision=64,
+            maxsize=maxsize,
+            optimizer_algorithm=optimizer_algorithm,
+            optimizer_iterations=optimizer_iterations,
+            optimizer_nrestarts=optimizer_nrestarts,
+            should_simplify=should_simplify,
+            temp_equation_file=temp_equation_file,
+            tempdir=tempdir,
+            procs=128
+            )
+        
     for iter in range(niterations):
         
 
@@ -116,15 +144,16 @@ for epoch in tqdm(range(evolutions),desc='evolution'):
         
 
         # Compute log likelihood (for example)
-        equations["log_like"] = - equations["loss"] * len(X)
+        #equations["log_like"] = - equations["loss"] * len(X)
+        #equations["log_like"] = -0.5 * len(X) * np.log(2*np.pi) - (np.log(obs['M_BH_std_sym'])).sum() - 0.5 * equations["loss"] * w.sum()
 
         # Compute AIC:
-        equations["aic"] = 2 * equations["number_constants"] - 2 * equations["log_like"]
+        #equations["aic"] = 2 * equations["number_constants"] - 2 * equations["log_like"]
 
         equations['evolutions']=epoch
         equations['iterations']=iter
 
         if epoch==0 and iter==0:
-            equations.to_csv('/data/zj448/SR/Ultimate_paper/pareto_archive/pareto.csv',index=False)
+            equations.to_csv('/data/zj448/SR/Ultimate_paper/pareto_archive/pareto_'+para_set+'_'+operator_set+'.csv',index=False)
         else:
-            equations.to_csv('/data/zj448/SR/Ultimate_paper/pareto_archive/pareto.csv',index=False,mode='a',header=False)
+            equations.to_csv('/data/zj448/SR/Ultimate_paper/pareto_archive/pareto_'+para_set+'_'+operator_set+'.csv',index=False,mode='a',header=False)
