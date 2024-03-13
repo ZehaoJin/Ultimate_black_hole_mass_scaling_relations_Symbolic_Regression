@@ -10,11 +10,11 @@ from sympy import lambdify
 
 ## parameters
 ## low/easy: low_scatter/easy_obs, adv/sim: operators
-filename = 'pareto_low_adv_cleaned.csv'  
+filename = 'pareto_low_sim_cleaned.csv'  
 
 t_eq=pd.read_csv('/data/zj448/SR/Ultimate_paper/pareto_archive/'+filename)
 
-df_full = pd.read_csv('SMBH_Data_02_28_24.csv',header=1)
+df_full = pd.read_csv('SMBH_Data_03_06_24.csv',header=1)
 
 
 
@@ -42,7 +42,7 @@ low_scatter_para=['ETG','T-type','Bar', 'Disk', 'Ring', 'Core', 'Multiple', 'Com
 
 easy_obs_para=['LogSigma0','Concentration_Index','logSigma0sph','log_sigma0','dc','logRhphi','M*_sph','ube','bri25','bve','bvtc','logR10phi','M*_gal','log_B/T',
  'logRh','log_n_sph_eq','blum','log_R_e_sph_maj','logblum','log_n_sph_maj','logR10','Pseudobulge','AGN','Multiple','Ring','BCG','Disk','cD',
- 'Bar','Core','Compactness','ETG','T-type','M_BH','log10(R10_kpc)','log10(R90_kpc)','B-V','V-[3.6]','GJC23W1-W2','GJC23W2-W3','GJC23log(M*,gal/M_sun)','M_BH']
+ 'Bar','Core','Compactness','ETG','T-type','log10(R10_kpc)','log10(R90_kpc)','B-V','V-[3.6]','GJC23W1-W2','GJC23W2-W3','GJC23log(M*,gal/M_sun)','M_BH']
 
 low_scatter_para.append('M_BH_std_sym')
 easy_obs_para.append('M_BH_std_sym')

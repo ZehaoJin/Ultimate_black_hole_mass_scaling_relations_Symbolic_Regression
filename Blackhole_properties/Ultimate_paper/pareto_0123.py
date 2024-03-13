@@ -6,9 +6,9 @@ import re
 from tqdm import tqdm
 
 # params
-# already did low_adv
-para_set = 'low'  # low/easy
-operator_set = 'sim'  #adv/sim
+# already did low_adv, low_sim
+para_set = 'easy'  # low/easy
+operator_set = 'adv'  #adv/sim
 
 
 low_scatter_para=['ETG','T-type','Bar', 'Disk', 'Ring', 'Core', 'Multiple', 'Compactness', 'AGN',
@@ -35,7 +35,7 @@ low_scatter_para=['ETG','T-type','Bar', 'Disk', 'Ring', 'Core', 'Multiple', 'Com
 
 easy_obs_para=['LogSigma0','Concentration_Index','logSigma0sph','log_sigma0','dc','logRhphi','M*_sph','ube','bri25','bve','bvtc','logR10phi','M*_gal','log_B/T',
  'logRh','log_n_sph_eq','blum','log_R_e_sph_maj','logblum','log_n_sph_maj','logR10','Pseudobulge','AGN','Multiple','Ring','BCG','Disk','cD',
- 'Bar','Core','Compactness','ETG','T-type','M_BH','log10(R10_kpc)','log10(R90_kpc)','B-V','V-[3.6]','GJC23W1-W2','GJC23W2-W3','GJC23log(M*,gal/M_sun)','M_BH']
+ 'Bar','Core','Compactness','ETG','T-type','log10(R10_kpc)','log10(R90_kpc)','B-V','V-[3.6]','GJC23W1-W2','GJC23W2-W3','GJC23log(M*,gal/M_sun)','M_BH']
 
 
 df_full = pd.read_csv('SMBH_Data_03_06_24.csv',header=1)
@@ -55,6 +55,9 @@ print(len(obs))
 
 y = obs['M_BH'].to_numpy()
 w = 1/obs['M_BH_std_sym'].to_numpy()**2
+
+#print(y.shape)
+#print(w.shape)
 
 X = obs.iloc[:,:-2].to_numpy()
 
