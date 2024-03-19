@@ -12,8 +12,10 @@ operator_set = 'sim'  #adv/sim
 
 df_full = pd.read_csv('SMBH_Data_03_07_24.csv',header=1)
 
-paras = ['M*_sph','M*_gal','R_e_sph_maj','log_R_e_sph_maj','R_e_sph_eq_kpc','log_R_e_sph_eq_kpc',
-        'R10', 'logR10', 'logR10phi', 'Rh', 'logRh', 'logRhphi', 'logRemajphi', 'logReeqphi']
+# paras = ['M*_sph','M*_gal','R_e_sph_maj','log_R_e_sph_maj','R_e_sph_eq_kpc','log_R_e_sph_eq_kpc',
+#         'R10', 'logR10', 'logR10phi', 'Rh', 'logRh', 'logRhphi', 'logRemajphi', 'logReeqphi']
+
+paras = ['log_sigma0','M*_gal','logR10','logRh']
 
 if paras[-1]!='M_BH':
     paras.append('M_BH')

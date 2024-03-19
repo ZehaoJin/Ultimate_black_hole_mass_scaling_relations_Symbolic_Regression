@@ -10,7 +10,7 @@ from sympy import lambdify
 
 ## parameters
 ## low/easy: low_scatter/easy_obs, adv/sim: operators
-filename = 'pareto_low_sim_cleaned.csv'  
+filename = 'pareto_easy_sim_cleaned.csv'  
 
 t_eq=pd.read_csv('/data/zj448/SR/Ultimate_paper/pareto_archive/'+filename)
 
@@ -166,4 +166,5 @@ for row in tqdm(t_eq.iterrows(),total=len(t_eq)):
 
 
 # save
+t_eq=t_eq.drop_duplicates(subset='refit_equation',keep='first')
 t_eq.to_csv('/data/zj448/SR/Ultimate_paper/pareto_archive/'+filename[:-12]+'_refit.csv',index=False)

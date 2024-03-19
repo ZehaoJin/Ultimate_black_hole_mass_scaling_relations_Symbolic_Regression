@@ -6,9 +6,9 @@ import re
 from tqdm import tqdm
 
 # params
-# already did low_adv, low_sim
+# already did low_adv, low_sim, easy_adv, easy_sim
 para_set = 'easy'  # low/easy
-operator_set = 'adv'  #adv/sim
+operator_set = 'sim'  #adv/sim
 
 
 low_scatter_para=['ETG','T-type','Bar', 'Disk', 'Ring', 'Core', 'Multiple', 'Compactness', 'AGN',
