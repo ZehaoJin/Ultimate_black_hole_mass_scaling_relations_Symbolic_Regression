@@ -141,7 +141,7 @@ def general_fit(equation,df,verbose=True, simplification=True, intrinsic_scatter
     for column in df.columns:
         if column.endswith('_std') and column != 'y_std' and df[column].sum() != 0 and np.isin(column[1:-4],x_indexs)==False:
             loss_term4 += np.log(2*np.pi*df[column].values**2).sum()
-            loss_term5 += np.log(2*df[column].values**2).sum()
+            loss_term5 += np.log(2/(df[column].values**2)).sum()
 
 
     ### Define the model of the equation
@@ -380,7 +380,7 @@ def general_fit(equation,df,verbose=True, simplification=True, intrinsic_scatter
         print('N_para: ',N_para, 'dim: ',dim)
     # BIC = loss.item() + N_para * np.log(data_size) - N_para * np.log(2 * np.pi)
     BIC = loss.item() + loss_term4 + N_para * np.log(total_num_data)
-    BIC_i = BIC + logdet - loss_term5 - N_para * np.log(2 * np.pi)
+    BIC_i = BIC + logdet + loss_term5 - N_para * np.log(2 * np.pi)
 
     result = {}
     result['fitted_equation'] = optimized_equation
